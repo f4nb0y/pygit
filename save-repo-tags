@@ -1,13 +1,22 @@
 #!/usr/bin/env python3
+"""Save tag refs to JSON"""
+
+import json
+import sys
 
 from git import Repo
 
-repo = Repo.init()
-head = repo.head
-tags = repo.tags
-prev = tags['previous'] if 'previous' in tags else head
-curr = tags['current'] if 'current' in tags else head
 
-print('head', head.commit)
-print('previous', prev.commit)
-print('current', curr.commit)
+def main(args: list[str]):
+    repo = Repo.init()
+    head = repo.head
+    tags = repo.tags
+    save = {
+        tag: (tags[tag].commit.hexsha if tag in tags else head.commit.hexsha)
+        for tag in args[1:]
+    }
+    print(json.dumps(save))
+
+
+if __name__ == '__main__':
+    main(sys.argv)
