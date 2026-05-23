@@ -11,10 +11,7 @@ def main(args: list[str]):
     repo = Repo.init()
     head = repo.head
     tags = repo.tags
-    save = {
-        tag: (tags[tag].commit.hexsha if tag in tags else head.commit.hexsha)
-        for tag in args[1:]
-    }
+    save = {tag: (tags[tag] if tag in tags else head).commit.hexsha for tag in args[1:]}
     print(json.dumps(save))
 
 
