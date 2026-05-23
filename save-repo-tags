@@ -4,5 +4,5 @@ from git import Repo
 
 repo = Repo.init()
 
-for t in repo.tags:
-    print(t)
+for r in repo.references:
+    print(r)
