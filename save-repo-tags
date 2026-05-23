@@ -3,6 +3,11 @@
 from git import Repo
 
 repo = Repo.init()
+head = repo.head
+tags = repo.tags
+prev = tags['previous'] if 'previous' in tags else head
+curr = tags['current'] if 'current' in tags else head
 
-for r in repo.references:
-    print(r, r.commit)
+print('head', head.commit)
+print('previous', prev.commit)
+print('current', curr.commit)
