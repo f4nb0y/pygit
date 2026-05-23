@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""Load tag refs from JSON"""
+
+import json
+import os.path
+import sys
+
+from git import Repo
+
+
+def main(args):
+    repo = Repo.init()
+    load = json.load(sys.stdin)
+    for tag, ref in load.items():
+        repo.create_tag(
+            tag,
+            ref=ref,
+            message=f'Updated by {os.path.basename(args[0])}',
+            force=True,
+        )
+
+
+if __name__ == '__main__':
+    main(sys.argv)
