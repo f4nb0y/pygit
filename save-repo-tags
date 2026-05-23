@@ -5,4 +5,4 @@ from git import Repo
 repo = Repo.init()
 
 for r in repo.references:
-    print(r)
+    print(r, r.commit)
