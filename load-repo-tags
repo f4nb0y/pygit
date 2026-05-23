@@ -7,7 +7,7 @@ import sys
 from git import Repo
 
 
-def main(args):
+def main(args: list[str]):
     repo = Repo.init()
     load = json.load(sys.stdin)
     arg0 = args[0].split('/')[-1]
