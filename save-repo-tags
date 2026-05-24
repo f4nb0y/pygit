@@ -2,9 +2,14 @@
 """Save tag refs to JSON"""
 
 import json
+import os.path
 import sys
 
 from git import Repo
+
+
+def die(e: Exception):
+    sys.exit(f'{os.path.basename(sys.argv[0])}: {e.__traceback__.tb_lineno}: {e}')
 
 
 def main(args: list[str]):
@@ -13,8 +18,8 @@ def main(args: list[str]):
     for tag in args[1:]:
         try:
             ref = repo.tag(tag).commit.hexsha
-        except:
-            sys.exit(f'Tag not found: {tag}')
+        except Exception as e:
+            die(e)
         save[tag] = ref
     print(json.dumps(save))
 

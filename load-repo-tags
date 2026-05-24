@@ -2,9 +2,14 @@
 """Load tag refs from JSON"""
 
 import json
+import os.path
 import sys
 
 from git import Repo
+
+
+def die(e: Exception):
+    sys.exit(f'{os.path.basename(sys.argv[0])}: {e.__traceback__.tb_lineno}: {e}')
 
 
 def main(args: list[str]):
@@ -13,8 +18,8 @@ def main(args: list[str]):
     for tag, ref in load.items():
         try:
             _ = repo.commit(ref)
-        except:
-            sys.exit(f'Ref not found: {ref} (tag: {tag})')
+        except Exception as e:
+            die(e)
         repo.create_tag(tag, ref=ref, message=f'Tagged by {args[0]}', force=True)
 
 
