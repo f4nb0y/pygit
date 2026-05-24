@@ -7,9 +7,11 @@ import sys
 
 from git import Repo
 
+arg0 = os.path.basename(sys.argv[0])
 
-def die(e: Exception):
-    sys.exit(f'{os.path.basename(sys.argv[0])}: {e.__traceback__.tb_lineno}: {e}')
+
+def die(msg):
+    sys.exit(f'{arg0}: {msg}')
 
 
 def main(args: list[str]):
