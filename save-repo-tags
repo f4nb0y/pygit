@@ -9,12 +9,11 @@ from git import Repo
 
 def main(args: list[str]):
     repo = Repo.init()
-    tags = repo.tags
     save = {}
     for tag in args[1:]:
         try:
-            ref = tags[tag].commit.hexsha
-        except IndexError:
+            ref = repo.tag(tag).commit.hexsha
+        except:
             sys.exit(f'Tag not found: {tag}')
         save[tag] = ref
     print(json.dumps(save))
